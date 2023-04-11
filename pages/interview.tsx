@@ -6,21 +6,25 @@ import {
   MessageList,
   Message,
   MessageInput,
+  ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
 
 const Interview = () => {
   return (
     <main className="flex flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl font-mono text-lg">
-        <p className="mb-5">TechTalQ</p>
         <MainContainer>
           <ChatContainer>
+            <ConversationHeader className="bg-black">
+              <ConversationHeader.Content
+                userName="TechTalQ"
+                className="flex flex-col items-center justify-center text-xl"
+              />
+            </ConversationHeader>
             <MessageList>
               <Message
                 model={{
                   message: "Hello my friend",
-                  sentTime: "just now",
-                  sender: "Joe",
                   direction: "incoming",
                   position: "normal",
                 }}
