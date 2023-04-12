@@ -1,10 +1,19 @@
 import Link from "next/link";
-import { FormEvent } from "react";
+import { useRouter } from "next/router";
+import { FormEvent, useState } from "react";
 
 const Home = () => {
+  const [skill, setSkill] = useState("second");
+  const [yearsOfExperience, setYearsOfExperience] = useState(0);
+  const [jobDescription, setJobDescription] = useState("");
+  const router = useRouter();
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("submit");
+    router.push({
+      pathname: "/interview",
+      query: { skill, yearsOfExperience, jobDescription },
+    });
   };
   return (
     <main className="flex flex-col items-center justify-between p-24">
@@ -27,6 +36,8 @@ const Home = () => {
                   focus:outline-none focus:ring-indigo-500
                   focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Skill"
+                value={skill}
+                onChange={(val) => setSkill(val.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -43,6 +54,8 @@ const Home = () => {
                   focus:outline-none focus:ring-indigo-500
                   focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Years Of Experience"
+                value={yearsOfExperience}
+                onChange={(val) => setYearsOfExperience(+val.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -50,7 +63,7 @@ const Home = () => {
               <input
                 id="job-description"
                 name="job-description"
-                type="number"
+                type="text"
                 autoComplete="Job Description"
                 required
                 className="appearance-none rounded relative block
@@ -59,6 +72,8 @@ const Home = () => {
                   focus:outline-none focus:ring-indigo-500
                   focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Job Description"
+                value={jobDescription}
+                onChange={(val) => setJobDescription(val.target.value)}
               />
             </div>
           </div>
