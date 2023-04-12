@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 
 const Home = () => {
-  const [skill, setSkill] = useState("second");
+  const [skill, setSkill] = useState("");
   const [yearsOfExperience, setYearsOfExperience] = useState(0);
   const [jobDescription, setJobDescription] = useState("");
   const router = useRouter();
