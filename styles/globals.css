@@ -39,7 +39,8 @@ body {
 }
 
 .cs-chat-container,
-.cs-message-list {
+.cs-message-list,
+.cs-typing-indicator {
   background-color: transparent !important;
 }
 .cs-message-input {
@@ -50,6 +51,14 @@ body {
 .cs-message-input__content-editor-wrapper,
 .cs-message-input__content-editor-container,
 .cs-message-input__content-editor {
+  background-color: #927fbf !important;
+}
+.cs-typing-indicator {
+  margin-left: 10px;
+}
+.cs-typing-indicator__dot {
+  height: 10px;
+  width: 10px;
   background-color: #927fbf !important;
 }
 

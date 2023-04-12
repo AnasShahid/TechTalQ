@@ -10,7 +10,9 @@ export default async function handler(
     //   const result = await fetchData.json();
     if (req.method === "POST") {
       const { userInfo, messages } = JSON.parse(req.body);
-      console.log("userInfo", userInfo);
+      const behaviour = `${userInfo.skill}${userInfo.yearsOfExperience}${userInfo.jobDescription}`
+
+      await mockProcess();
 
       if (messages.length > 0) {
         console.log("messages", messages);
@@ -18,10 +20,18 @@ export default async function handler(
           data: { msg: messages[messages.length - 1].msg, role: "SYSTEM" },
         });
       } else {
-        return res.status(200).json({ data: { msg: "Hi", role: "SYSTEM" } });
+        return res.status(200).json({ data: { msg: "Question", role: "SYSTEM" } });
       }
     }
   } catch (error) {
     return res.status(401).json({ error });
   }
+}
+
+function mockProcess() {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
 }

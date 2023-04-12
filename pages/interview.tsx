@@ -5,6 +5,7 @@ import {
   Message,
   MessageInput,
   MessageList,
+  TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useRouter } from "next/router";
@@ -30,6 +31,7 @@ const Interview = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<MessageData[]>([]);
   const [userInfo, setUserInfo] = useState<any>();
+  const [showTypingIndicator, setShowTypingIndicator] = useState(false);
 
   useEffect(() => {
     const params = router.query;
@@ -52,6 +54,7 @@ const Interview = () => {
   }, [userInfo]);
 
   const getChatData = async (msgList: MessageData[]) => {
+    setShowTypingIndicator(true);
     const response = await fetch("/api/interview", {
       method: "POST",
       body: JSON.stringify({ userInfo, messages: msgList }),
@@ -61,6 +64,7 @@ const Interview = () => {
       const msgData = getNewMsgList(data, msgList);
       setMessages(msgData);
     }
+    setShowTypingIndicator(false);
   };
 
   const onSend = async (data: MessageData) => {
@@ -90,7 +94,9 @@ const Interview = () => {
                 className="flex flex-col text-3xl mb-5 border-indigo-900"
               />
             </ConversationHeader>
-            <MessageList>
+            <MessageList
+              typingIndicator={showTypingIndicator && <TypingIndicator />}
+            >
               {messages &&
                 messages.map((msg: MessageData) => {
                   return (
