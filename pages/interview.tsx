@@ -33,10 +33,10 @@ const Interview = () => {
       <div className="z-10 w-full max-w-5xl font-mono text-lg">
         <MainContainer>
           <ChatContainer>
-            <ConversationHeader className="bg-black">
+            <ConversationHeader>
               <ConversationHeader.Content
                 userName="TechTalQ"
-                className="flex flex-col items-center justify-center text-xl"
+                className="flex flex-col text-3xl mb-5 border-indigo-900"
               />
             </ConversationHeader>
             <MessageList>
@@ -44,6 +44,14 @@ const Interview = () => {
                 model={{
                   message: "Hello my friend",
                   direction: "incoming",
+                  position: "normal",
+                }}
+              />
+
+              <Message
+                model={{
+                  message: "Hello my friend",
+                  direction: "outgoing",
                   position: "normal",
                 }}
               />

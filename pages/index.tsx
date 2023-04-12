@@ -16,9 +16,11 @@ const Home = () => {
     });
   };
   return (
-    <main className="flex flex-col items-center justify-between p-24">
+    <main className="h-screen flex flex-col items-center justify-between p-24">
       <div className="z-10 w-1/2 max-w-5xl font-mono">
-        <h1 className="mb-5 text-2xl font-bold text-center">TechTalQ</h1>
+        <h1 className="mb-5 text-2xl font-bold text-center text-primary-300">
+          TechTalQ
+        </h1>
 
         <form className="mt-8 space-y-6" onSubmit={onSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
@@ -33,8 +35,8 @@ const Home = () => {
                 className="appearance-none rounded relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-indigo-500
-                  focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-primary-300 bg-primary-300
+                  focus:border-primary-300 focus:z-10 sm:text-sm"
                 placeholder="Skill"
                 value={skill}
                 onChange={(val) => setSkill(val.target.value)}
@@ -51,8 +53,8 @@ const Home = () => {
                 className="appearance-none rounded relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-indigo-500
-                  focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-primary-300 bg-primary-300
+                  focus:border-primary-300 focus:z-10 sm:text-sm"
                 placeholder="Years Of Experience"
                 value={yearsOfExperience}
                 onChange={(val) => setYearsOfExperience(+val.target.value)}
@@ -69,8 +71,8 @@ const Home = () => {
                 className="appearance-none rounded relative block
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-indigo-500
-                  focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-primary-300 bg-primary-300
+                  focus:border-primary-300 focus:z-10 sm:text-sm"
                 placeholder="Job Description"
                 value={jobDescription}
                 onChange={(val) => setJobDescription(val.target.value)}
@@ -83,9 +85,9 @@ const Home = () => {
               type="submit"
               className="group mx-auto relative w-1/3 flex justify-center
                 py-2 px-4 border border-transparent text-sm font-medium
-                rounded-md text-white bg-indigo-600 hover:bg-indigo-700
+                rounded-md text-white bg-primary-600 hover:bg-primary-700
                 focus:outline-none focus:ring-2 focus:ring-offset-2
-                focus:ring-indigo-500"
+                focus:ring-primary-500"
             >
               Start
             </button>
