@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
-  MainContainer,
   ChatContainer,
-  MessageList,
+  ConversationHeader,
+  MainContainer,
   Message,
   MessageInput,
-  ConversationHeader,
+  MessageList,
 } from "@chatscope/chat-ui-kit-react";
-import { withRouter } from "next/router";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const Interview = (props: any) => {
+const Interview = () => {
+  const router = useRouter();
   useEffect(() => {
-    const params = props.router.query;
+    const params = router.query;
+    if (!router.isReady) return;
     console.log("params", params);
     if (
       params.skill === undefined ||
@@ -20,11 +22,11 @@ const Interview = (props: any) => {
       params.jobDescription === undefined
     ) {
       alert("Missing user information");
-      props.router.replace({
+      router.replace({
         pathname: "/",
       });
     }
-  }, []);
+  }, [router.isReady]);
 
   return (
     <main className="flex flex-col items-center justify-between p-24">
@@ -57,4 +59,4 @@ const Interview = (props: any) => {
   );
 };
 
-export default withRouter(Interview);
+export default Interview;
