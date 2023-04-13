@@ -1,3 +1,4 @@
+import { ChatGPTMessage, ROLES } from "@/constant/constant";
 import {
   ChatContainer,
   ConversationHeader,
@@ -11,25 +12,9 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-type MessageData = {
-  msg: string;
-  role: ROLES;
-};
-
-const enum ROLES {
-  USER = "USER",
-  SYSTEM = "SYSTEM",
-}
-
-type Params = {
-  skill: string;
-  yearsOfExperience: string;
-  jobDescription: string;
-};
-
 const Interview = () => {
   const router = useRouter();
-  const [messages, setMessages] = useState<MessageData[]>([]);
+  const [messages, setMessages] = useState<ChatGPTMessage[]>([]);
   const [userInfo, setUserInfo] = useState<any>();
   const [showTypingIndicator, setShowTypingIndicator] = useState(false);
 
@@ -51,10 +36,11 @@ const Interview = () => {
   }, [router.isReady]);
 
   useEffect(() => {
-    if (userInfo) getChatData(messages);
+    // if (userInfo && messages.length > 0)
+    getChatData(messages);
   }, [userInfo]);
 
-  const getChatData = async (msgList: MessageData[]) => {
+  const getChatData = async (msgList: ChatGPTMessage[]) => {
     setShowTypingIndicator(true);
     const response = await fetch("/api/interview", {
       method: "POST",
@@ -68,18 +54,18 @@ const Interview = () => {
     setShowTypingIndicator(false);
   };
 
-  const onSend = async (data: MessageData) => {
+  const onSend = async (data: ChatGPTMessage) => {
     const msgData = getNewMsgList(data, messages);
     setMessages(msgData);
     getChatData(msgData);
   };
 
-  const getNewMsgList = (data: MessageData, messages: any[]) => {
+  const getNewMsgList = (data: ChatGPTMessage, messages: any[]) => {
     return [
       ...messages,
       {
-        msg: data.msg,
         role: data.role,
+        content: data.content,
       },
     ];
   };
@@ -99,11 +85,11 @@ const Interview = () => {
               typingIndicator={showTypingIndicator && <TypingIndicator />}
             >
               {messages &&
-                messages.map((msg: MessageData) => {
+                messages.map((msg: ChatGPTMessage) => {
                   return (
                     <Message
                       model={{
-                        message: msg.msg,
+                        message: msg.content,
                         direction:
                           msg.role === ROLES.USER ? "outgoing" : "incoming",
                         position: "normal",
@@ -116,7 +102,7 @@ const Interview = () => {
               placeholder="Type message here"
               attachButton={false}
               onSend={(innerHtml: string) => {
-                onSend({ msg: innerHtml, role: ROLES.USER });
+                onSend({ role: ROLES.USER, content: innerHtml });
               }}
             />
           </ChatContainer>
