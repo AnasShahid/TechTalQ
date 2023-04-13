@@ -36,8 +36,7 @@ const Interview = () => {
   }, [router.isReady]);
 
   useEffect(() => {
-    // if (userInfo && messages.length > 0)
-    getChatData(messages);
+    if (userInfo) getChatData(messages);
   }, [userInfo]);
 
   const getChatData = async (msgList: ChatGPTMessage[]) => {

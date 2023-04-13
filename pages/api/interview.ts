@@ -25,17 +25,30 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
     Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
   };
 
+  const { skills, yearsOfExperience, jobRole, jobDescription } = body.userInfo;
+
   const messages: ChatGPTMessage[] = [
     {
       role: "system",
-      content: `You are a technical interviewer.`,
+      content: `You are a friendly technical interviewer with name TechTalQ, 
+      and you will take a short mock interview and 
+      will ask total 2 questions and verify answers from 
+      the user and give the feedback to the user after. 
+      Start by welcoming, asking candidate's name and guiding how the process will go.
+      All questions should be based on ${skills} with ${yearsOfExperience} years of experience and job role ${jobRole}.
+      `,
     },
-  ]
+    {
+      role: "user",
+      content: `Hi`,
+    },
+  ];
   messages.push(...body?.messages);
 
   const payload: any = {
     model: process.env.OPENAI_API_MODEL,
     messages: messages,
+    temperature: 0.2,
   };
 
   const response = await fetch(
