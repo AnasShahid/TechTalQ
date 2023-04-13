@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --primary-300: #e1dbff;
   --primary-500: rgb(99 102 241);
   --primary-600: rgb(79 70 229);
   --primary-700: rgb(67 56 202);
@@ -91,4 +92,11 @@ body {
 }
 .cs-button--send {
   color: #927fbf !important;
+}
+ .ant-select .ant-select-selector{
+  border: none !important;
+ }
+.ant-select .ant-select-selector,
+.ant-select .ant-select-clear {
+  background-color: var(--primary-300) !important;
 }

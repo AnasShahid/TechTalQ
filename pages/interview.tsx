@@ -37,7 +37,8 @@ const Interview = () => {
     const params = router.query;
     if (!router.isReady) return;
     if (
-      params.skill === undefined ||
+      params.jobRole === undefined ||
+      params.skills === undefined ||
       params.yearsOfExperience === undefined ||
       params.jobDescription === undefined
     ) {
