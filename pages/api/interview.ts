@@ -22,7 +22,7 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
 
   const requestHeaders: Record<string, string> = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? "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"}`,
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
   };
 
   const { skills, yearsOfExperience, jobRole, jobDescription } = body.userInfo;
