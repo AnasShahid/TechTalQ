@@ -2,6 +2,8 @@ import { InfoCircleFilled } from "@ant-design/icons";
 import { Select, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import skillsDataset from "./../data/skills.json"
+import rolesDataset from "./../data/roles.json"
 
 const Home = () => {
   const [jobRole, setJobRole] = useState("");
@@ -43,33 +45,7 @@ const Home = () => {
                 placeholder="Please select"
                 value={jobRole}
                 onChange={(values) => setJobRole(values)}
-                options={[
-                  { label: "Software Engineer", value: "Software Engineer" },
-                  { label: "Data Analyst", value: "Data Analyst" },
-                  {
-                    label: "Network Administrator",
-                    value: "Network Administrator",
-                  },
-                  {
-                    label: "Cybersecurity Analyst",
-                    value: "Cybersecurity Analyst",
-                  },
-                  { label: "Cloud Architect", value: "Cloud Architect" },
-                  {
-                    label: "Artificial Intelligence Engineer",
-                    value: "Artificial Intelligence Engineer",
-                  },
-                  { label: "Web Developer", value: "Web Developer" },
-                  {
-                    label: "Mobile Application Developer",
-                    value: "Mobile Application Developer",
-                  },
-                  {
-                    label: "Systems Administrator",
-                    value: "Systems Administrator",
-                  },
-                  { label: "DevOps Engineer", value: "DevOps Engineer" },
-                ]}
+                options={rolesDataset.map(val => ({label: val, value: val}))}
               />
             </div>
             <div className="mb-4">
@@ -91,27 +67,7 @@ const Home = () => {
                 placeholder="Please select"
                 value={skills}
                 onChange={(values) => values?.length < 6 && setSkills(values)}
-                options={[
-                  { label: "Java Development", value: "Java Development" },
-                  { label: "Python Programming", value: "Python Programming" },
-                  {
-                    label: "JavaScript Development",
-                    value: "JavaScript Development",
-                  },
-                  { label: "C# Programming", value: "C# Programming" },
-                  { label: "PHP Development", value: "PHP Development" },
-                  { label: "Ruby Programming", value: "Ruby Programming" },
-                  { label: "Swift Development", value: "Swift Development" },
-                  {
-                    label: "SQL Database Management",
-                    value: "SQL Database Management",
-                  },
-                  {
-                    label: "HTML/CSS Web Development",
-                    value: "HTML/CSS Web Development",
-                  },
-                  { label: "Kotlin Programming", value: "Kotlin Programming" },
-                ]}
+                options={skillsDataset.map(val => ({label: val, value: val}))}
               />
             </div>
             <div className="mb-4">
