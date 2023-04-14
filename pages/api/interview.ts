@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
-      const newMsg = await chatGPTHandler(req);
+      const newMsg: any = await chatGPTHandler(req);
       return res.status(200).json({
         data: newMsg.choices[0].message,
       });
@@ -22,7 +22,7 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
 
   const requestHeaders: Record<string, string> = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? "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"}`,
   };
 
   const { skills, yearsOfExperience, jobRole, jobDescription } = body.userInfo;
@@ -36,7 +36,10 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
       the user and give the feedback to the user after. 
       Start by welcoming, asking candidate's name and guiding how the process will go. 
       you are always friendly, kind, and inspiring and thoughtful responses to the user.
-      All questions should be based on ${skills} with ${yearsOfExperience} years of experience and job role ${jobRole}. 
+      All questions should be based on ${skills.join(
+        ","
+      )} with ${yearsOfExperience} years of experience and job role is ${jobRole}
+      ${jobDescription ? ` and job description is "${jobDescription}"` : ""}. 
       `,
     },
     {
