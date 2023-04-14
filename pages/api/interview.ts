@@ -1,7 +1,4 @@
-import { ChatGPTMessage, ROLES } from "@/constant/constant";
-import { replaceString } from "@/utils/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
-import initChat from "./../../constant/chat-init.config.json";
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,30 +24,9 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
     Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
   };
 
-  const { skills, yearsOfExperience, jobRole, jobDescription } = body.userInfo;
-
-  const messages: ChatGPTMessage[] = [
-    {
-      role: ROLES.SYSTEM,
-      content: replaceString(initChat.systemBehaviorRole, {
-        skills: skills.join(","),
-        yearsOfExperience,
-        jobRole,
-        jobDescription: jobDescription
-          ? ` and job description is ${jobDescription}`
-          : "",
-      }),
-    },
-    {
-      role: ROLES.USER,
-      content: initChat.userInitMsg,
-    },
-  ];
-  messages.push(...body?.messages);
-
   const payload: any = {
     model: process.env.OPENAI_API_MODEL,
-    messages: messages,
+    messages: body?.messages,
     temperature: 0.2,
   };
 

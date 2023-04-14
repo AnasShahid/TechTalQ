@@ -2,8 +2,7 @@ import { InfoCircleFilled } from "@ant-design/icons";
 import { Select, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import skillsDataset from "./../data/skills.json"
-import rolesDataset from "./../data/roles.json"
+import dataset from "./../data/constant.json";
 
 const Home = () => {
   const [jobRole, setJobRole] = useState("");
@@ -45,7 +44,10 @@ const Home = () => {
                 placeholder="Please select"
                 value={jobRole}
                 onChange={(values) => setJobRole(values)}
-                options={rolesDataset.map(val => ({label: val, value: val}))}
+                options={dataset.roles.map((val) => ({
+                  label: val,
+                  value: val,
+                }))}
               />
             </div>
             <div className="mb-4">
@@ -67,7 +69,10 @@ const Home = () => {
                 placeholder="Please select"
                 value={skills}
                 onChange={(values) => values?.length < 6 && setSkills(values)}
-                options={skillsDataset.map(val => ({label: val, value: val}))}
+                options={dataset.skills.map((val) => ({
+                  label: val,
+                  value: val,
+                }))}
               />
             </div>
             <div className="mb-4">
