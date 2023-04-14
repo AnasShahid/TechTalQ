@@ -1,5 +1,7 @@
-import { ChatGPTMessage } from "@/constant/constant";
+import { ChatGPTMessage, ROLES } from "@/constant/constant";
+import { replaceString } from "@/utils/helper";
 import type { NextApiRequest, NextApiResponse } from "next";
+import initChat from "./../../constant/chat-init.config.json";
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,22 +31,19 @@ const chatGPTHandler = async (req: NextApiRequest): Promise<Response> => {
 
   const messages: ChatGPTMessage[] = [
     {
-      role: "system",
-      content: `You are a friendly technical interviewer with name TechTalQ, 
-      and you will take a short mock interview and 
-      will ask total 2 questions and verify answers from 
-      the user and give the feedback to the user after. 
-      Start by welcoming, asking candidate's name and guiding how the process will go. 
-      you are always friendly, kind, and inspiring and thoughtful responses to the user.
-      All questions should be based on ${skills.join(
-        ","
-      )} with ${yearsOfExperience} years of experience and job role is ${jobRole}
-      ${jobDescription ? ` and job description is "${jobDescription}"` : ""}. 
-      `,
+      role: ROLES.SYSTEM,
+      content: replaceString(initChat.systemBehaviorRole, {
+        skills: skills.join(","),
+        yearsOfExperience,
+        jobRole,
+        jobDescription: jobDescription
+          ? ` and job description is ${jobDescription}`
+          : "",
+      }),
     },
     {
-      role: "user",
-      content: `Hi`,
+      role: ROLES.USER,
+      content: initChat.userInitMsg,
     },
   ];
   messages.push(...body?.messages);

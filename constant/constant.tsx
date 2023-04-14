@@ -10,3 +10,7 @@ export enum ROLES {
   SYSTEM = "system",
   ASSISTANT = "assistant",
 }
+
+export type GenericDictionary = {
+  [key: string]: string | number | boolean;
+};
