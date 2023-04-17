@@ -1,4 +1,5 @@
 import { ChatGPTMessage, ROLES } from "@/constant/constant";
+import { replaceString } from "@/utils/helper";
 import {
   ChatContainer,
   ConversationHeader,
@@ -11,11 +12,15 @@ import {
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import initChatMsg from "../data/chat-init.config.json";
 
-const Interview = () => {
+const Interview = ({
+  initMessages = [],
+}: {
+  initMessages: ChatGPTMessage[];
+}) => {
   const router = useRouter();
   const [messages, setMessages] = useState<ChatGPTMessage[]>([]);
-  const [userInfo, setUserInfo] = useState<any>();
   const [showTypingIndicator, setShowTypingIndicator] = useState(false);
 
   useEffect(() => {
@@ -32,18 +37,17 @@ const Interview = () => {
         pathname: "/",
       });
     }
-    setUserInfo(params);
   }, [router.isReady]);
 
   useEffect(() => {
-    if (userInfo) getChatData(messages);
-  }, [userInfo]);
+    if (initMessages.length > 0) getChatData(messages);
+  }, [initMessages]);
 
   const getChatData = async (msgList: ChatGPTMessage[]) => {
     setShowTypingIndicator(true);
     const response = await fetch("/api/interview", {
       method: "POST",
-      body: JSON.stringify({ userInfo, messages: msgList }),
+      body: JSON.stringify({ messages: [...initMessages, ...msgList] }),
     });
     const { data } = await response.json();
     if (data) {
@@ -110,5 +114,28 @@ const Interview = () => {
     </main>
   );
 };
+
+export async function getServerSideProps(context: any) {
+  const { query } = context;
+
+  const { skills, yearsOfExperience, jobRole, jobDescription } = query;
+
+  const initMessages: ChatGPTMessage[] = JSON.parse(
+    replaceString(JSON.stringify(initChatMsg), {
+      skills: skills.join(","),
+      yearsOfExperience,
+      jobRole,
+      jobDescription: jobDescription
+        ? ` and job description is ${jobDescription}`
+        : "",
+    })
+  );
+
+  return {
+    props: {
+      initMessages,
+    }, // will be passed to the page component as props
+  };
+}
 
 export default Interview;
