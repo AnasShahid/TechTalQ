@@ -39,8 +39,8 @@ const Home = () => {
                 className="appearance-none rounded relative
                   w-full
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-primary-300 bg-primary-300
-                  focus:border-primary-300x focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-light-primary bg-light-primary
+                  focus:border-light-primary focus:z-10 sm:text-sm"
                 placeholder="Please select"
                 value={jobRole}
                 onChange={(values) => setJobRole(values)}
@@ -64,8 +64,8 @@ const Home = () => {
                 className="appearance-none rounded relative
                   w-full
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-primary-300 bg-primary-300
-                  focus:border-primary-300x focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-light-primary
+                  focus:border-light-primary focus:z-10 sm:text-sm"
                 placeholder="Please select"
                 value={skills}
                 onChange={(values) => values?.length < 6 && setSkills(values)}
@@ -89,9 +89,9 @@ const Home = () => {
                   type="range"
                   autoComplete="Years Of Experience"
                   min="0"
-                  max="10"
+                  max="20"
                   required
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-primary-300"
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-light-primary"
                   placeholder="Years Of Experience"
                   value={yearsOfExperience}
                   onChange={(val) => setYearsOfExperience(+val.target.value)}
@@ -113,8 +113,8 @@ const Home = () => {
                 className="appearance-none rounded relative block h-40
                   w-full px-3 py-2 border border-gray-300
                   placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-primary-300 bg-primary-300
-                  focus:border-primary-300 focus:z-10 sm:text-sm"
+                  focus:outline-none focus:ring-light-primary bg-light-primary
+                  focus:border-light-primary focus:z-10 sm:text-sm"
                 placeholder="Job Description"
                 value={jobDescription}
                 onChange={(val) => setJobDescription(val.target.value)}
@@ -128,9 +128,9 @@ const Home = () => {
               disabled={!jobRole || !skills || skills.length === 0}
               className="group mx-auto relative w-1/3 flex justify-center
                 py-2 px-4 border border-transparent text-sm font-medium
-                rounded-md text-white bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed
+                rounded-md text-primary-text bg-light-primary hover:bg-divider disabled:opacity-50 disabled:cursor-not-allowed
                 focus:outline-none focus:ring-2 focus:ring-offset-2
-                focus:ring-primary-500"
+                focus:ring-primary"
             >
               Start
             </button>
