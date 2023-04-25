@@ -1,6 +1,7 @@
 import { ChatGPTMessage, ROLES } from "@/constant/constant";
 import { replaceString } from "@/utils/helper";
 import {
+  Avatar,
   ChatContainer,
   ConversationHeader,
   MainContainer,
@@ -13,6 +14,8 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import initChatMsg from "../data/chat-init.config.json";
+import { UserOutlined, RobotOutlined } from "@ant-design/icons";
+import { Avatar as AvatarIcon } from "antd";
 
 const Interview = ({
   initMessages = [],
@@ -37,6 +40,7 @@ const Interview = ({
         pathname: "/",
       });
     }
+    setMessages([]);
   }, [router.isReady]);
 
   useEffect(() => {
@@ -88,16 +92,29 @@ const Interview = ({
               typingIndicator={showTypingIndicator && <TypingIndicator />}
             >
               {messages &&
-                messages.map((msg: ChatGPTMessage) => {
+                messages.map((msg: ChatGPTMessage, index: number) => {
                   return (
                     <Message
+                      key={index}
                       model={{
                         message: msg.content,
                         direction:
                           msg.role === ROLES.USER ? "outgoing" : "incoming",
                         position: "normal",
                       }}
-                    />
+                    >
+                      <Avatar>
+                        <AvatarIcon
+                          className={
+                            msg.role === ROLES.USER
+                              ? "bg-accent text-white"
+                              : "bg-light-primary text-primary-text"
+                          }
+                          size="large"
+                          icon={msg.role === ROLES.USER ? <UserOutlined /> : <RobotOutlined />}
+                        />
+                      </Avatar>
+                    </Message>
                   );
                 })}
             </MessageList>
@@ -118,8 +135,10 @@ const Interview = ({
 export async function getServerSideProps(context: any) {
   const { query } = context;
 
-  const { skills, yearsOfExperience, jobRole, jobDescription } = query;
-
+  let { skills, yearsOfExperience, jobRole, jobDescription } = query;
+  if (!Array.isArray(skills)) {
+    skills = [skills];
+  }
   const initMessages: ChatGPTMessage[] = JSON.parse(
     replaceString(JSON.stringify(initChatMsg), {
       skills: skills.join(","),
